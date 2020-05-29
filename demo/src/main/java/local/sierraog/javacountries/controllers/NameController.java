@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import static local.sierraog.javacountries.JavacountriesApplication.ourCountryList;
 
 @RestController
-@RequestMapping("/name")
+@RequestMapping("/names")
 public class NameController {
     @GetMapping(value = "/all",
             produces = {"application/json"})
@@ -29,6 +29,7 @@ public class NameController {
     public ResponseEntity<?> getCountriesStart(@PathVariable char letter)
     {
         ArrayList<Country> returnCountries = ourCountryList.filterCountries(c -> c.getName().toUpperCase().startsWith(String.valueOf(letter).toUpperCase()));
+        returnCountries.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
         return new ResponseEntity<>(returnCountries, HttpStatus.OK);
     }
 

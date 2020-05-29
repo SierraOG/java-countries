@@ -36,4 +36,14 @@ public class AgeController {
         ourCountryList.countryList.sort((c1, c2) -> c2.getMedianage() - c1.getMedianage());
         return new ResponseEntity<>(ourCountryList.countryList.get(0), HttpStatus.OK);
     }
+
+    @GetMapping(value = "/median",
+            produces = "application/json")
+    public ResponseEntity<?> getMedianCountry()
+    {
+        int median = ourCountryList.countryList.size() / 2;
+        median = median > 0 && median % 2 == 0 ? median - 1 : median;
+        ourCountryList.countryList.sort((c1, c2) -> c2.getMedianage() - c1.getMedianage());
+        return new ResponseEntity<>(ourCountryList.countryList.get(median), HttpStatus.OK);
+    }
 }
